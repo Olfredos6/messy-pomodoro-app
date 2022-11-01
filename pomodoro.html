@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <div id="strike"></div>
     <div id="time"></div>
     <script>
 
@@ -28,7 +29,6 @@
                 weak--;
                 value = chooseWeak()
             }
-            total -= value
             return value
         }
 
@@ -40,6 +40,7 @@
         // 1 Get total hours
         let total = 4 // in hours
         let minutes = 3600000 * total
+        let strike = 1
 
         // 2 weak/strong
         let strong = total / 2
@@ -68,14 +69,18 @@
             return next
         }
 
+
         let startTime = new Date()
         let then = new Date(startTime.getTime() + getNextCpuntDown())
 
+        document.getElementById("strike").innerText = `${strike}/${total}`
         let interval = setInterval(() => {
             if (then > new Date()) {
                 document.getElementById("time").innerText = (new Date(then - new Date())).toUTCString().substr(-12, 8)
             } else {
                 if ( minutes > 0) {
+                    strike++;
+                    document.getElementById("strike").innerText = `${strike}/${total}`
                     startTime = new Date()
                     then = new Date(startTime.getTime() + getNextCpuntDown())
                 }else{
