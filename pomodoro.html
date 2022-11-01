@@ -46,8 +46,7 @@
     </audio>
     <script>
 
-        let total, minutes, strong, weak, totalSteps, startTime, then;
-        let strike = 0
+        let total, minutes, strong, weak, totalSteps, startTime, then, strike;
         let onBreak = false
 
         // if strong get stronh else get weak, reduce
@@ -147,6 +146,7 @@
 
             startTime = new Date()
             then = new Date(startTime.getTime() + getNextCpuntDown())
+            strike = 0
             runPomodoro()
             document.querySelector(".form").style.display = "none"
             document.getElementById("congrats").style.display = "none"
