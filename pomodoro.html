@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="time"></div>
+    <script>
+
+
+        // if strong get stronh else get weak, reduce
+        function getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+        let chooseStrong = () => Math.ceil(getRandomArbitrary(26, 30))
+        let chooseWeak = () => Math.ceil(getRandomArbitrary(20, 25))
+        let countDown = () => {
+            let value = 0;
+            if (strong != 0) {
+                strong--;
+                value = chooseStrong()
+            } else {
+                weak--;
+                value = chooseWeak()
+            }
+            total -= value
+            return value
+        }
+
+        // get now
+        function minToMiliSecs(minutes) {
+            return minutes * 60 * 1000
+        }
+
+        // 1 Get total hours
+        let total = 4 // in hours
+        let minutes = 3600000 * total
+
+        // 2 weak/strong
+        let strong = total / 2
+        let weak = total - strong
+
+        // while (strong || weak) {
+        //     let startTime = new Date()
+        //     let then = new Date(startTime.getTime() + minToMiliSecs(countDown()))
+
+        //     console.log(total, minutes, strong, weak, startTime, then)
+        //     let howLongLeft = then - new Date()
+
+        //     let interval = setInterval(() => {
+        //         if (then > new Date()) {
+        //             document.getElementById("time").innerText = (new Date(then - new Date())).toUTCString().substr(-12, 8)
+        //         } else {
+        //             clearInterval(interval)
+        //         }
+        //     }, 1000)
+        // }
+
+        function getNextCpuntDown() {
+            let next = minToMiliSecs(countDown())
+            next = next > minutes ? minutes : next
+            minutes = minutes - next
+            return next
+        }
+
+        let startTime = new Date()
+        let then = new Date(startTime.getTime() + getNextCpuntDown())
+
+        let interval = setInterval(() => {
+            if (then > new Date()) {
+                document.getElementById("time").innerText = (new Date(then - new Date())).toUTCString().substr(-12, 8)
+            } else {
+                if ( minutes > 0) {
+                    startTime = new Date()
+                    then = new Date(startTime.getTime() + getNextCpuntDown())
+                }else{
+                    clearInterval(interval)
+                }
+            }
+        }, 1000)
+
+    </script>
+</body>
+
+</html>
